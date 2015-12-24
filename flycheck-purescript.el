@@ -116,11 +116,21 @@ project. The main purescript file is the .purescript file which contains a
    (lambda (x)(equal (flycheck-purescript-decode-type x) type))
    lst))
 
+(defun flycheck-purescript-project-root (path)
+  (concat (projectile-project-root) path))
+(defun flycheck-purescript-psc-args ()
+  (list
+   "--json-errors" "--no-opts" "-v" "-o"
+   (flycheck-purescript-project-root "output/")
+   (flycheck-purescript-project-root "bower_components/*/src/**/*.purs")
+   (flycheck-purescript-project-root "src/**/*.purs")))
+
 (flycheck-define-checker purescript
   "A syntax checker for purescript-mode using the json output from psc"
-  :command ("psc" "--json-errors" "--no-opts" "-v" "-o" null-device source)
+  :command ("psc" (eval (flycheck-purescript-psc-args)))
   :error-parser flycheck-purescript-parse-errors
   :modes purescript-mode)
+
 
 ;;;###autoload
 (defun flycheck-purescript-setup ()
