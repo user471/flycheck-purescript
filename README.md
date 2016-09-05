@@ -16,10 +16,10 @@ Flycheck support for the purescript language.
 `test = foo`
 </td>
 <td>
-```
+<code>
 foo = foo1
 bar = bar1
-```
+</code>
 </td>
 </tr>
 </tbody>
